@@ -1,6 +1,8 @@
-require 'spelling_corrector'
+require 'norvig_spelling_corrector'
+require 'bigram_spelling_corrector'
 
-corrector = SpellingCorrector.new
+norvig = NorvigSpellingCorrector.new
+bigram = BigramSpellingCorrector.new
 
 while(1)
   print "Gimme a word> "
@@ -8,17 +10,20 @@ while(1)
   word.chomp!
   word.downcase!
 
+  break if(word =~ /^quit|exit$/);
+
   #puts word
-  #puts " - correct: #{corrector.is_correct?(word)}" 
-  #puts " - count:   #{corrector.word_count(word)}"
-  #puts " - corpus:  #{corrector.corpus_size}" 
-  #puts " - freq:    #{corrector.word_freq(word)}"
+  #puts " - correct: #{norvig.is_correct?(word)}" 
+  #puts " - count:   #{norvig.word_count(word)}"
+  #puts " - corpus:  #{norvig.corpus_size}" 
+  #puts " - freq:    #{norvig.word_freq(word)}"
 
   puts "Top 10 corrections for \"#{word}\""
-  corrections = corrector.correct(word)
+  corrections = norvig.correct(word)
   for i in 0...(corrections.size < 10 ? corrections.size : 10)
     puts corrections[i]
   end
   puts ""
-  
 end
+
+puts 'bye!'
